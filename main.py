@@ -64,6 +64,8 @@ EXPORT_URL = "http://httpmqttbridge.io.home/electricity/ess/reverse"
 RATE_URL = "http://httpmqttbridge.io.home/electricity/rates/current"
 importVal = float(send_get(IMPORT_URL).text)
 exportVal = float(send_get(EXPORT_URL).text)
+print(f"OPEN IMPORT: {importVal}")
+print(f"OPEN EXPORT: {exportVal}")
 importTotal = 0
 exportTotal = 0
 importCost = 0
@@ -74,6 +76,7 @@ while True:
         nextExportVal = float(send_get(EXPORT_URL).text)
         currentRate = float(send_get(RATE_URL).text)
         if round(nextImportVal,1) != round(importVal,1):
+            print(f"NEXT IMPORT: {nextImportVal}")
             lastimport = importVal
             currentimport = nextImportVal
             delta = round(currentimport - lastimport,3)
@@ -85,6 +88,7 @@ while True:
             print(f"IM:£{round(importCost,2)}")
             importVal = nextImportVal
         if round(nextExportVal,1) != round(exportVal,1):
+            print(f"NEXT EXPORT: {nextExportVal}")
             lastexport = exportVal
             currentexport = nextExportVal
             delta = round(currentexport - lastexport,3)
