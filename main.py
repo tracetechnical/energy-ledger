@@ -5,7 +5,15 @@ from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 from datetime import datetime, timedelta
 
+logging.basicConfig()
+log = logging.getLogger()
+log.setLevel(logging.INFO)
+
+IMPORT_URL = "http://httpmqttbridge.io.home/electricity/ess/forward"
+EXPORT_URL = "http://httpmqttbridge.io.home/electricity/ess/reverse"
+RATE_URL = "http://httpmqttbridge.io.home/electricity/rates/current"
 ADD_LEDGER_URL = "http://houseura.io.home/api/rest/ledgeradd"
+
 
 def round_to_nearest_minute(dt):
     seconds = dt.second
@@ -55,13 +63,7 @@ def send_get(url):
 
     return response
 
-logging.basicConfig()
-log = logging.getLogger()
-log.setLevel(logging.INFO)
 
-IMPORT_URL = "http://httpmqttbridge.io.home/electricity/ess/forward"
-EXPORT_URL = "http://httpmqttbridge.io.home/electricity/ess/reverse"
-RATE_URL = "http://httpmqttbridge.io.home/electricity/rates/current"
 importVal = float(send_get(IMPORT_URL).text)
 exportVal = float(send_get(EXPORT_URL).text)
 print(f"OPEN IMPORT: {importVal}")
